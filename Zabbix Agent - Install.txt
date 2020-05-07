@@ -1,0 +1,15 @@
+# Installing Zabbix Agent
+
+sudo apt-get install zabbix-agent
+sudo service zabbix-agent start
+sudo service zabbix-agent status
+
+# Edit zabbix_agentd.conf
+
+sudo nano /etc/zabbix/zabbix_agentd.conf
+
+# Modify the following fields
+
+Server=172.16.10.4		#Zabbix Server IP
+ServerActive=172.16.10.4	#Zabbix Server IP
+Hostname=NAS			#Make sure it match with the main OS Hostname

@@ -1,0 +1,4 @@
+# Forward traffic from Gi0/1 to Fa0/22 that belongs to VLAN10
+
+monitor session 1 source interface Gi0/1
+monitor session 1 destination interface Fa0/22 ingress dot1q vlan 10

@@ -1,0 +1,35 @@
+# Create file /home/pi/sending-temperature.sh
+# Put this code:
+
+--------------------------------------------------------------------------
+#!/bin/sh
+#IP ZABBIX SERVER
+ip_zabbix="172.16.10.5"
+#LOCAL HOSTNAME
+host_local="NAS"
+
+#GET TEMPERATURE
+RPrawtemp=`cat /sys/class/thermal/thermal_zone0/temp`
+RPtemp="$(RPrawtemp)"
+
+#SEND TO ZABBIX SERVER
+zabbix_sender -z $ip_zabbix -s $host_local -k "rb.temperature" -o $RPtemp
+--------------------------------------------------------------------------
+
+# Give root permissions
+
+sudo chmod +x /home/pi/sending-temperature.sh
+sudo chmod 755 /home/pi/sending-temperature.sh
+
+# Set automatic script execution
+
+Open Crontab
+crontab -e
+
+# Add line, check temperature every minute
+
+*/1 * * * * /home/pi/sending-temperature.sh >> /home/pi/cronsTemp.log 2>&1
+
+# Create item as Trapper
+
+https://waqasahmedkhan.com/monitor-raspberry-pi-temprature-with-zabbix/
