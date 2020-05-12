@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2020-05-12T18:37:14Z</date>
+    <groups>
+        <group>
+            <name>ZbX - Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>ZbX - Raspberry PI CPU Temperature Server</template>
+            <name>ZbX - Raspberry PI CPU Temperature Server</name>
+            <description>UserParameter=rpi.cpuTemperature,cat/sys/class/thermal/thermal_zone0/temp</description>
+            <groups>
+                <group>
+                    <name>ZbX - Templates</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <name>CPU temperature</name>
+                    <key>rpi.cpuTemperature</key>
+                    <units>°C</units>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>0.001</params>
+                        </step>
+                    </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{avg(#5)}&gt;=60</expression>
+                            <name>CPU temperature is high</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                        <trigger>
+                            <expression>{avg(#5)}&gt;=65</expression>
+                            <name>CPU temperature is too high</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+        </template>
+    </templates>
+    <graphs>
+        <graph>
+            <name>CPU temperature</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>ZbX - Raspberry PI CPU Temperature Server</host>
+                        <key>rpi.cpuTemperature</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>

@@ -1,0 +1,32 @@
+# See the instructions at
+
+https://www.zabbix.com/download?zabbix=5.0&os_distribution=raspbian&os_version=10_buster&db=mysql&ws=apache\\
+
+#To set password after step c. run
+
+#In this installation, I will use password rootDBpass as root database password and zabbixDBpass as Zabbix database password. Consider changing your password for security reasons.
+
+sudo mysql_secure_installation
+
+# Enter current password for root (enter for none): Press the Enter
+# Set root password? [Y/n]: Y
+# New password: <Enter root DB password>
+# Re-enter new password: <Repeat root DB password>
+# Remove anonymous users? [Y/n]: Y
+# Disallow root login remotely? [Y/n]: Y
+# Remove test database and access to it? [Y/n]:  Y
+# Reload privilege tables now? [Y/n]:  Y
+
+sudo mysql -uroot -p
+
+# mysql> create database zabbix character set utf8 collate utf8_bin;
+# mysql> grant all privileges on zabbix.* to zabbix@localhost identified by 'zabbixDBpass';
+# mysql> quit;
+
+zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz |  mysql -uzabbix -p'zabbixDBpass' zabbix
+
+sudo nano /etc/zabbix/zabbix_server.conf
+
+# DBPassword=zabbixDBpass
+
+# In Frontend configuration teh password is zabbixDBpass
