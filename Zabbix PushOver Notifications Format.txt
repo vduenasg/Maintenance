@@ -1,0 +1,46 @@
+Problem: {EVENT.NAME}
+Problem started at {EVENT.TIME} on {EVENT.DATE}
+Problem name: {EVENT.NAME}
+Host: {HOST.NAME}
+Severity: {EVENT.SEVERITY}
+Operational data: {EVENT.OPDATA}
+Original problem ID: {EVENT.ID}
+{TRIGGER.URL}
+
+PROBLEM: {HOST.NAME}
+
+ID: {EVENT.ID}
+====================================
+{EVENT.SEVERITY}
+====================================
+
+{EVENT.NAME} --> {EVENT.OPDATA}
+
+====================================
+
+Time: {EVENT.TIME}
+Date: {EVENT.DATE}
+
+Resolved in {EVENT.DURATION}: {EVENT.NAME}
+Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+Problem name: {EVENT.NAME}
+Problem duration: {EVENT.DURATION}
+Host: {HOST.NAME}
+Severity: {EVENT.SEVERITY}
+Original problem ID: {EVENT.ID}
+{TRIGGER.URL}
+
+RESOLVED:  {HOST.NAME}
+
+
+ID: {EVENT.ID}
+====================================
+Problem duration: {EVENT.DURATION}
+====================================
+
+{EVENT.NAME} --> {EVENT.OPDATA}
+
+====================================
+
+Time: {EVENT.RECOVERY.TIME}
+Date: {EVENT.RECOVERY.DATE}

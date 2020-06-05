@@ -1,0 +1,38 @@
+# First create a global macro {$INTERNET.UP.SPEED} and {$INTERNET.DOWN.SPEED}, then set speed in bps
+
+
+In: {ITEM.LASTVALUE1}, out: {ITEM.LASTVALUE2}, speed: {ITEM.LASTVALUE3}
+
+({Router Cisco 1905:net.if.in[ifHCInOctets.8].avg(30m)}>0.8*{$INTERNET.UP.SPEED} or
+{Router Cisco 1905:net.if.out[ifHCOutOctets.8].avg(30m)}>0.8*{$INTERNET.DOWN.SPEED}) and
+{Router Cisco 1905:net.if.speed[ifHighSpeed.8].last()}>0
+
+{Router Cisco 1905:net.if.in[ifHCInOctets.8].avg(2h)}<0.5*{$INTERNET.UP.SPEED} and
+{Router Cisco 1905:net.if.out[ifHCOutOctets.8].avg(2h)}<0.5*{$INTERNET.DOWN.SPEED}
+
+In: {ITEM.LASTVALUE1}, out: {ITEM.LASTVALUE2}, speed: {ITEM.LASTVALUE3}
+
+({Router Cisco 1905:net.if.in[ifHCInOctets.9].avg(30m)}>0.8*{$INTERNET.UP.SPEED} or
+{Router Cisco 1905:net.if.out[ifHCOutOctets.9].avg(30m)}>0.8*{$INTERNET.DOWN.SPEED}) and
+{Router Cisco 1905:net.if.speed[ifHighSpeed.9].last()}>0
+
+{Router Cisco 1905:net.if.in[ifHCInOctets.9].avg(2h)}<0.5*{$INTERNET.UP.SPEED} and
+{Router Cisco 1905:net.if.out[ifHCOutOctets.9].avg(2h)}<0.5*{$INTERNET.DOWN.SPEED}
+
+In: {ITEM.LASTVALUE1}, out: {ITEM.LASTVALUE2}, speed: {ITEM.LASTVALUE3}
+
+({Router Cisco 1905:net.if.in[ifHCInOctets.10].avg(30m)}>0.8*{$INTERNET.UP.SPEED} or
+{Router Cisco 1905:net.if.out[ifHCOutOctets.10].avg(30m)}>0.8*{$INTERNET.DOWN.SPEED}) and
+{Router Cisco 1905:net.if.speed[ifHighSpeed.10].last()}>0
+
+{Router Cisco 1905:net.if.in[ifHCInOctets.10].avg(2h)}<0.5*{$INTERNET.UP.SPEED} and
+{Router Cisco 1905:net.if.out[ifHCOutOctets.10].avg(2h)}<0.5*{$INTERNET.DOWN.SPEED}
+
+In: {ITEM.LASTVALUE1}, out: {ITEM.LASTVALUE2}, speed: {ITEM.LASTVALUE3}
+
+({Router Cisco 1905:net.if.in[ifHCInOctets.11].avg(30m)}>0.8*{$INTERNET.UP.SPEED} or
+{Router Cisco 1905:net.if.out[ifHCOutOctets.11].avg(30m)}>0.8*{$INTERNET.DOWN.SPEED}) and
+{Router Cisco 1905:net.if.speed[ifHighSpeed.11].last()}>0
+
+{Router Cisco 1905:net.if.in[ifHCInOctets.11].avg(2h)}<0.5*{$INTERNET.UP.SPEED} and
+{Router Cisco 1905:net.if.out[ifHCOutOctets.11].avg(2h)}<0.5*{$INTERNET.DOWN.SPEED}
