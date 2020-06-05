@@ -1,15 +1,9 @@
 On branch master
 Your branch is up to date with 'origin/master'.
 
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	new file:   Zabbix Internet Bandwidth Trigger.txt
-	new file:   Zabbix PushOver Notifications Format.txt
-	new file:   Zabbix Pushover Script Original.txt
-	modified:   Zabbix Templates/ZbX - Unifi SNMP V1 HN.xml
-
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
 	modified:   _results.txt
 
+no changes added to commit (use "git add" and/or "git commit -a")
