@@ -1,3 +1,5 @@
 #Modify package name accordingly
 
-sudo dpkg -i plexmediaserver_1.18.9.2578-513b381af_armhf.deb
+cd /home/pi
+
+sudo dpkg -i plexmediaserver_1.19.4.2935-79e214ead_armhf.deb
