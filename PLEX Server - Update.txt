@@ -2,4 +2,4 @@
 
 cd /home/pi
 
-sudo dpkg -i plexmediaserver_1.19.4.2935-79e214ead_armhf.deb
+sudo dpkg -i plexmediaserver_1.20.1.3252-a78fef9a9_armhf.deb

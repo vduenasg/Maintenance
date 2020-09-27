@@ -1,0 +1,43 @@
+vlan 21
+name NETWORK-PSTL
+int vlan 21
+description NETWORK-PSTL
+no shutdown
+
+vlan 22
+name NETWORK-PSTL-GUEST
+int vlan 22
+description NETWORK-PSTL-HUEST
+no shutdown
+
+vlan 31
+name NETWORK-HOME
+int vlan 31
+description NETWORK-HOME
+no shutdown
+
+vlan 32
+name NETWORK-HOME-IOT
+int vlan 32
+description NETWORK-HOME-IOT
+no shutdown
+
+vlan 101
+name NETWORK-ARENAS
+int vlan 101
+description NETWORK-ARENAS
+no shutdown
+
+vlan 102
+name NETWORK-VILLANUEVA
+int vlan 102
+description NETWORK-VILLANUEVA
+no shutdown
+
+vlan 103
+name NETWORK-ARCE
+int vlan 103
+description NETWORK-ARCE
+no shutdown
+
+

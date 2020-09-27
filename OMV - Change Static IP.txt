@@ -1,0 +1,7 @@
+access via SSH to:
+
+/etc/openmediavault
+
+Modify IP addres in te config.xml file
+
+reboot

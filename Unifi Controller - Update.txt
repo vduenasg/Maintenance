@@ -1,0 +1,5 @@
+#Modify package name accordingly
+
+cd /home/pi
+
+sudo dpkg -i 04ca-debian-6.0.20-4600653fd95f45a7a4a651be5b67c217.deb
