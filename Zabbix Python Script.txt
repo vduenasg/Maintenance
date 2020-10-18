@@ -1,0 +1,13 @@
+# Give root permissions
+
+sudo chmod +x /home/pi/NAS_temp.py
+sudo chmod 755 /home/pi/NAS_temp.py
+
+# Set automatic script execution
+
+Open Crontab
+crontab -e
+
+# Add line, check temperature every 10 minutes
+
+*/10 * * * * python3 NAS_temp.py >> /home/pi/cronsNASTemp.log 2>&1
