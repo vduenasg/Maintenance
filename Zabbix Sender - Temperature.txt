@@ -4,9 +4,9 @@
 --------------------------------------------------------------------------
 #!/bin/sh
 #IP ZABBIX SERVER
-ip_zabbix="172.16.10.22"
+ip_zabbix="172.16.10.23"
 #LOCAL HOSTNAME
-host_local="Home-NAS"
+host_local="Home_NAS"
 
 #GET TEMPERATURE
 RPrawtemp=`cat /sys/class/thermal/thermal_zone0/temp`
