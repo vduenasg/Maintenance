@@ -1,6 +1,5 @@
 hostname Core_Router-1921
 enable secret P@55w0rd!
-no ip domain-lookup
 username admin priv 15 secret P@55w0rd!
 ip domain-name netzek.com
 ip ssh version 2
@@ -16,64 +15,116 @@ transport input ssh
 login local
 service password-encryption
 
+ip dhcp excluded-address 10.48.10.1 10.48.10.100
+ip dhcp excluded-address 10.48.100.1 10.48.100.100
+ip dhcp excluded-address 172.16.101.1 172.16.101.100
+ip dhcp excluded-address 10.16.204.1 10.16.204.100
+ip dhcp excluded-address 10.16.205.1 10.16.205.100
+
+ip dhcp pool DHCP-VLAN10
+ network 10.48.10.0 255.255.255.0
+ default-router 10.48.10.1
+ dns-server 8.8.8.8 1.1.1.1 
+
+ip dhcp pool DHCP-VLAN100
+ network 10.48.100.0 255.255.255.0
+ default-router 10.48.100.1
+ dns-server 8.8.8.8 1.1.1.1
+
+ip dhcp pool DHCP-VLAN101
+ network 172.16.101.0 255.255.255.0
+ default-router 172.16.101.1
+ dns-server 8.8.8.8 1.1.1.1
+
+ip dhcp pool DHCP-VLAN204
+ network 10.16.204.0 255.255.255.0
+ default-router 10.16.204.1
+ dns-server 8.8.8.8 1.1.1.1
+
+ip dhcp pool DHCP-VLAN205
+ network 10.16.205.0 255.255.255.0
+ default-router 10.16.205.1
+ dns-server 8.8.8.8 1.1.1.1
+
 int g0/0
+description ISP
 ip address 172.31.0.2 255.255.255.252
 no shut
 ip nat outside
 
-int g0/1
-ip address 172.66.0.1 255.255.255.248
-no shutdown
+int g0/1.10
+description MANAGEMENT
+encapsulation dot1Q 10
+ip address 10.48.10.1 255.255.255.0
 ip nat inside
+no shutdown
+
+int g0/1.100
+description NETWORK-CORE
+encapsulation dot1Q 100
+ip address 10.48.100.1 255.255.255.0
+ip nat inside
+no shutdown
+
+int g0/1.101
+description NETWORK-IOT
+encapsulation dot1Q 101
+ip address 172.16.101.1 255.255.255.0
+ip nat inside
+no shutdown
+
+int g0/1.204
+description NETWORK-YONI
+encapsulation dot1Q 204
+ip address 10.16.204.1 255.255.255.0
+ip nat inside
+no shutdown
+
+int g0/1.205
+description NETWORK-TITANES
+encapsulation dot1Q 205
+ip address 10.16.205.1 255.255.255.0
+ip nat inside
+no shutdown
 
 int f0/0/0
-switchport mode trunk
-no shutdown
-
-VLAN 10
-name MANAGEMENT
-no shutdown
-
-VLAN 100
-name NETWORK-CORE
-no shutdown
-
-VLAN 101
-name NETWORK-GUEST
-no shutdown
-
-interface VLAN10
-description MANAGEMENT
-ip address 10.48.10.1 255.255.255.0
-no shutdown
+description TO-HOME
+ip address 172.66.0.1 255.255.255.248
 ip nat inside
-
-interface VLAN100
-description NETWORK-CORE
-ip address 10.48.100.1 255.255.255.0
 no shutdown
-ip nat inside
 
-interface VLAN101
-description NETWORK-GUEST
-ip address 172.16.101.1 255.255.255.0
-no shutdown
-ip nat inside
-
-ip nat inside source list 80 interface GigabitEthernet0/0 overload
+ip nat inside source list 1 interface GigabitEthernet0/0 overload
 ip route 0.0.0.0 0.0.0.0 172.31.0.1
 
-access-list 80 permit 10.48.10.0 0.0.0.255
-access-list 80 permit 10.48.100.0 0.0.0.255
-access-list 80 permit 172.16.101.0 0.0.0.255
-
-snmp-server community SNMPpublic RO
-ntp server pool.ntp.org
-clock timezone GMT -5
+access-list 1 permit 10.48.0.0 0.0.255.255
+access-list 1 permit 172.16.0.0 0.0.255.255
+access-list 1 permit 10.16.0.0 0.0.255.255
+access-list 1 permit 172.66.0.0 0.0.0.255
 
 router ospf 66
-network 10.48.10.0 0.0.0.255 area 0
-network 10.48.100.0 0.0.0.255 area 0
-network 172.16.101.0 0.0.0.255 area 0
-network 172.66.0.0 0.0.0.7 area 0
+network 10.48.0.0 0.0.255.255 area 0
+network 172.16.0.0 0.0.255.255 area 0
+network 10.16.0.0 0.0.255.255 area 0
+network 172.66.0.0 0.0.0.255 area 0
 default-information originate
+
+snmp-server community SNMPpublic RO
+
+clock timezone GMT -5
+ip domain-lookup
+ip name-server 8.8.8.8 1.1.1.1
+ntp server pool.ntp.org
+
+service timestamps log datetime localtime
+
+!Syslog
+logging trap 7
+logging 10.48.11.3
+
+no service config
+
+end
+
+wr
+
+

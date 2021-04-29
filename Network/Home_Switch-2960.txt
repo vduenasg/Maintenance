@@ -16,7 +16,7 @@ login local
 service password-encryption
 
 int g0/3
-description HOME_LBE-5AC-GEN2
+description TRUNK
 switchport mode trunk
 no shutdown
 exit
@@ -85,6 +85,7 @@ exit
 
 
 snmp-server community SNMPpublic RO
+
 clock timezone GMT -5
 ip domain-lookup
 ip name-server 8.8.8.8 1.1.1.1
@@ -97,3 +98,7 @@ no service config
 !Syslog
 logging trap 7
 logging 10.48.11.3
+
+end
+
+wr

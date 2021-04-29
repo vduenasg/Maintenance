@@ -54,7 +54,6 @@ ip dhcp pool DHCP-VLAN203
 
 int g0/0
 ip address 172.66.0.4 255.255.255.248
-ip nat outside
 no shut
 
 int g0/1
@@ -64,53 +63,45 @@ int g0/1.11
 description MANAGEMENT
 encapsulation dot1Q 11
 ip address 10.48.11.1 255.255.255.0
-ip nat inside
 no shutdown
 
 int g0/1.110
 description NETWORK-HOME
 encapsulation dot1Q 110
 ip address 10.48.110.1 255.255.255.0
-ip nat inside
 no shutdown
 
 int g0/1.111
 description NETWORK-IOT
 encapsulation dot1Q 111
 ip address 172.16.111.1 255.255.255.0
-ip nat inside
 no shutdown
 
 int g0/1.201
 description NETWORK-ARENAS
 encapsulation dot1Q 201
 ip address 10.16.201.1 255.255.255.0
-ip nat inside
 no shutdown
 
 int g0/1.202
 description NETWORK-VILLANUEVA
 encapsulation dot1Q 202
 ip address 10.16.202.1 255.255.255.0
-ip nat inside
 no shutdown
 
 int g0/1.203
 description NETWORK-ARCE
 encapsulation dot1Q 203
 ip address 10.16.203.1 255.255.255.0
-ip nat inside
 no shutdown
 
-ip nat inside source list 1 interface GigabitEthernet0/0 overload
 ip route 0.0.0.0 0.0.0.0 172.66.0.3
 
-access-list 1 permit 10.48.11.0 0.0.0.255
-access-list 1 permit 10.48.110.0 0.0.0.255
-access-list 1 permit 172.16.111.0 0.0.0.255
-access-list 1 permit 10.16.201.0 0.0.0.255
-access-list 1 permit 10.16.202.0 0.0.0.255
-access-list 1 permit 10.16.203.0 0.0.0.255
+router ospf 66
+network 10.48.0.0 0.0.255.255 area 0
+network 172.16.0.0 0.0.255.255 area 0
+network 10.16.0.0 0.0.255.255 area 0
+network 172.66.0.0 0.0.0.255 area 0
 
 snmp-server community SNMPpublic RO
 
@@ -126,3 +117,7 @@ logging trap 7
 logging 10.48.11.3
 
 no service config
+
+end
+
+wr

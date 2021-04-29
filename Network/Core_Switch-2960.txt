@@ -1,6 +1,5 @@
 hostname Core_Switch-2960
 enable secret P@55w0rd!
-no ip domain-lookup
 username admin priv 15 secret P@55w0rd!
 ip domain-name netzek.com
 ip ssh version 2
@@ -16,45 +15,81 @@ transport input ssh
 login local
 service password-encryption
 
-ip dhcp excluded-address 10.48.10.1 10.48.10.100
-ip dhcp excluded-address 10.48.100.1 10.48.100.100
-ip dhcp excluded-address 172.16.101.1 172.16.101.100
-
-ip dhcp pool DHCP-VLAN10
- network 10.48.10.0 255.255.255.0
- default-router 10.48.10.1
- dns-server 1.1.1.1 8.8.8.8 
-
-ip dhcp pool DHCP-VLAN100
- network 10.48.100.0 255.255.255.0
- default-router 10.48.100.1
- dns-server 1.1.1.1 8.8.8.8 
-
-ip dhcp pool DHCP-VLAN101
- network 172.16.101.0 255.255.255.0
- default-router 172.16.101.1
- dns-server 1.1.1.1 8.8.8.8
-
 int g0/1
+description TRUNK
 switchport mode trunk
 no shutdown
+exit
+
+int g0/2
+description UAP-AC-LR
+switchport trunk native vlan 10
+switchport mode trunk
+no shutdown
+exit
 
 interface VLAN10
 description MANAGEMENT
 ip address 10.48.10.2 255.255.255.0
 no shutdown
+exit
+VLAN 10
+name MANAGEMENT
+no shutdown
+exit
 
 interface VLAN100
 description NETWORK-CORE
-ip address 10.48.100.2 255.255.255.0
 no shutdown
+exit
+VLAN 100
+name NETWORK-HOME
+no shutdown
+exit
 
 interface VLAN101
-description NETWORK-GUEST
-ip address 172.16.101.2 255.255.255.0
+description NETWORK-IOT
 no shutdown
+exit
+VLAN 101
+name NETWORK-IOT
+no shutdown
+exit
+
+interface VLAN204
+description NETWORK-YONI
+no shutdown
+exit
+VLAN 204
+name NETWORK-YONI
+no shutdown
+exit
+
+interface VLAN205
+description NETWORK-TITANES
+no shutdown
+exit
+VLAN 205
+name NETWORK-TITANES
+no shutdown
+exit
 
 snmp-server community SNMPpublic RO
-ntp server pool.ntp.org
+
 clock timezone GMT -5
+ip domain-lookup
+ip name-server 8.8.8.8 1.1.1.1
+ntp server pool.ntp.org
+
+service timestamps log datetime localtime
+
+no service config
+
+!Syslog
+logging trap 7
+logging 10.48.11.3
+
+end
+
+wr
 
