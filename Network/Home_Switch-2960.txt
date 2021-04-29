@@ -1,0 +1,99 @@
+hostname Home_Switch-2960
+enable secret P@55w0rd!
+username admin priv 15 secret P@55w0rd!
+ip domain-name netzek.com
+ip ssh version 2
+crypto key generate rsa
+1024
+line console 0
+password P@55w0rd!
+logging synchronous
+login
+line vty 0 4
+privilege level 15
+transport input ssh
+login local
+service password-encryption
+
+int g0/3
+description HOME_LBE-5AC-GEN2
+switchport mode trunk
+no shutdown
+exit
+
+interface GigabitEthernet0/4
+description UAP-AC-LR
+switchport trunk native vlan 11
+switchport mode trunk
+no shutdown
+exit
+
+interface VLAN11
+description MANAGEMENT
+ip address 10.48.11.2 255.255.255.0
+no shutdown
+exit
+VLAN 11
+name MANAGEMENT
+no shutdown
+exit
+
+interface VLAN110
+description NETWORK-HOME
+no shutdown
+exit
+VLAN 110
+name NETWORK-HOME
+no shutdown
+exit
+
+interface VLAN111
+description NETWORK-IOT
+no shutdown
+exit
+VLAN 111
+name NETWORK-IOT
+no shutdown
+exit
+
+interface VLAN201
+description NETWORK-ARENAS
+no shutdown
+exit
+VLAN 201
+name NETWORK-ARENAS
+no shutdown
+exit
+
+interface VLAN202
+description NETWORK-VILLANUEVA
+no shutdown
+exit
+VLAN 202
+name NETWORK-VILLANUEVA
+no shutdown
+exit
+
+interface VLAN203
+description NETWORK-ARCE
+no shutdown
+exit
+VLAN 203
+name NETWORK-ARCE
+no shutdown
+exit
+
+
+snmp-server community SNMPpublic RO
+clock timezone GMT -5
+ip domain-lookup
+ip name-server 8.8.8.8 1.1.1.1
+ntp server pool.ntp.org
+
+service timestamps log datetime localtime
+
+no service config
+
+!Syslog
+logging trap 7
+logging 10.48.11.3

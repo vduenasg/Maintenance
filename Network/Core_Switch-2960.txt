@@ -1,0 +1,60 @@
+hostname Core_Switch-2960
+enable secret P@55w0rd!
+no ip domain-lookup
+username admin priv 15 secret P@55w0rd!
+ip domain-name netzek.com
+ip ssh version 2
+crypto key generate rsa
+1024
+line console 0
+password P@55w0rd!
+logging synchronous
+login
+line vty 0 4
+privilege level 15
+transport input ssh
+login local
+service password-encryption
+
+ip dhcp excluded-address 10.48.10.1 10.48.10.100
+ip dhcp excluded-address 10.48.100.1 10.48.100.100
+ip dhcp excluded-address 172.16.101.1 172.16.101.100
+
+ip dhcp pool DHCP-VLAN10
+ network 10.48.10.0 255.255.255.0
+ default-router 10.48.10.1
+ dns-server 1.1.1.1 8.8.8.8 
+
+ip dhcp pool DHCP-VLAN100
+ network 10.48.100.0 255.255.255.0
+ default-router 10.48.100.1
+ dns-server 1.1.1.1 8.8.8.8 
+
+ip dhcp pool DHCP-VLAN101
+ network 172.16.101.0 255.255.255.0
+ default-router 172.16.101.1
+ dns-server 1.1.1.1 8.8.8.8
+
+int g0/1
+switchport mode trunk
+no shutdown
+
+interface VLAN10
+description MANAGEMENT
+ip address 10.48.10.2 255.255.255.0
+no shutdown
+
+interface VLAN100
+description NETWORK-CORE
+ip address 10.48.100.2 255.255.255.0
+no shutdown
+
+interface VLAN101
+description NETWORK-GUEST
+ip address 172.16.101.2 255.255.255.0
+no shutdown
+
+snmp-server community SNMPpublic RO
+ntp server pool.ntp.org
+clock timezone GMT -5
+

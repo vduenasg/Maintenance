@@ -12,4 +12,4 @@ sudo nano /etc/zabbix/zabbix_agentd.conf
 
 Server=172.16.10.22		#Zabbix Server IP
 ServerActive=172.16.10.22	#Zabbix Server IP
-Hostname=Home-NAS		#Make sure it match with the main OS Hostname
+Hostname=Home_NAS		#Make sure it match with the main OS Hostname

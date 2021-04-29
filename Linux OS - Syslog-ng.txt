@@ -1,0 +1,21 @@
+sudo apt-get update
+sudo apt-get install syslog-ng
+cd /etc/syslog-ng
+sudo cp syslog-ng.conf syslog-ng_original_conf
+sudo nano syslog-ng.conf
+
+source s_net { udp(ip(0.0.0.0) port(514)); };
+
+filter f_Router_1905 { host( "10.48.11.1" ); };
+filter f_Switch_2960 { host( "10.48.11.2" ); };
+
+destination d_Router_1905 { file("/home/pi/Syslog-ng/Home_Router/$HOST.Router_1905.${YEAR}.${MONTH}.${DAY}.log"); };
+destination d_Switch_2960 { file("/home/pi/Syslog-ng/Home_Switch/$HOST.Switch_2960.${YEAR}.${MONTH}.${DAY}.log"); };
+
+log { source(s_net); filter(f_Router_1905); destination(d_Router_1905); };
+log { source(s_net); filter(f_Switch_2960); destination(d_Switch_2960 ); };
+
+sudo service syslog-ng restart
+
+crontab -e
+@reboot sleep 60 && sudo service syslog-ng restart >> /home/pi/cronsUpdates.log 2>&1

@@ -1,0 +1,79 @@
+hostname Core_Router-1921
+enable secret P@55w0rd!
+no ip domain-lookup
+username admin priv 15 secret P@55w0rd!
+ip domain-name netzek.com
+ip ssh version 2
+crypto key generate rsa
+1024
+line console 0
+password P@55w0rd!
+logging synchronous
+login
+line vty 0 4
+privilege level 15
+transport input ssh
+login local
+service password-encryption
+
+int g0/0
+ip address 172.31.0.2 255.255.255.252
+no shut
+ip nat outside
+
+int g0/1
+ip address 172.66.0.1 255.255.255.248
+no shutdown
+ip nat inside
+
+int f0/0/0
+switchport mode trunk
+no shutdown
+
+VLAN 10
+name MANAGEMENT
+no shutdown
+
+VLAN 100
+name NETWORK-CORE
+no shutdown
+
+VLAN 101
+name NETWORK-GUEST
+no shutdown
+
+interface VLAN10
+description MANAGEMENT
+ip address 10.48.10.1 255.255.255.0
+no shutdown
+ip nat inside
+
+interface VLAN100
+description NETWORK-CORE
+ip address 10.48.100.1 255.255.255.0
+no shutdown
+ip nat inside
+
+interface VLAN101
+description NETWORK-GUEST
+ip address 172.16.101.1 255.255.255.0
+no shutdown
+ip nat inside
+
+ip nat inside source list 80 interface GigabitEthernet0/0 overload
+ip route 0.0.0.0 0.0.0.0 172.31.0.1
+
+access-list 80 permit 10.48.10.0 0.0.0.255
+access-list 80 permit 10.48.100.0 0.0.0.255
+access-list 80 permit 172.16.101.0 0.0.0.255
+
+snmp-server community SNMPpublic RO
+ntp server pool.ntp.org
+clock timezone GMT -5
+
+router ospf 66
+network 10.48.10.0 0.0.0.255 area 0
+network 10.48.100.0 0.0.0.255 area 0
+network 172.16.101.0 0.0.0.255 area 0
+network 172.66.0.0 0.0.0.7 area 0
+default-information originate

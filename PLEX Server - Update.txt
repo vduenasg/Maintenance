@@ -2,4 +2,4 @@
 
 cd /home/pi
 
-sudo dpkg -i plexmediaserver_1.21.1.3876-3c3adfcb4_armhf.deb
+sudo dpkg -i plexmediaserver_1.22.2.4282-a97b03fad_armhf.deb

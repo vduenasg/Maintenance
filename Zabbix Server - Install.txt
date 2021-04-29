@@ -6,6 +6,8 @@ https://www.zabbix.com/download?zabbix=5.0&os_distribution=raspbian&os_version=1
 
 #In this installation, I will use password rootDBpass as root database password and zabbixDBpass as Zabbix database password. Consider changing your password for security reasons.
 
+sudo apt install mariadb-server
+
 sudo mysql_secure_installation
 
 # Enter current password for root (enter for none): Press the Enter
@@ -20,13 +22,14 @@ sudo mysql_secure_installation
 sudo mysql -uroot -p
 
 # mysql> create database zabbix character set utf8 collate utf8_bin;
-# mysql> grant all privileges on zabbix.* to zabbix@localhost identified by 'zabbixDBpass';
+# mysql> grant all privileges on zabbix.* to zabbix@localhost identified by 'P@55w0rd!';
 # mysql> quit;
 
-zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz |  mysql -uzabbix -p'zabbixDBpass' zabbix
+zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz |  mysql -uzabbix -p'P@55w0rd!' zabbix
 
 sudo nano /etc/zabbix/zabbix_server.conf
 
-# DBPassword=zabbixDBpass
+# DBPassword=P@55w0rd!
 
-# In Frontend configuration teh password is zabbixDBpass
+# In Frontend configuration teh password is P@55w0rd!
+
