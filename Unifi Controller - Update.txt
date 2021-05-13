@@ -2,4 +2,4 @@
 
 cd /home/pi
 
-sudo dpkg -i 04ca-debian-6.0.20-4600653fd95f45a7a4a651be5b67c217.deb
+sudo dpkg -i 2806-debian-6.2.23-90ea8bdb1d4a41ddb2939e3cca6fb883.deb

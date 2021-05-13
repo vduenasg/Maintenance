@@ -1,0 +1,6 @@
+#copy the userparameter_rpi.conf to /etc/zabbix/zabbix_agentd.d
+
+sudo service zabbix-agent restart
+sudo service zabbix-agent status
+
+#import ZbX - Raspberry PI CPU Temperature Server.xml to your templates
