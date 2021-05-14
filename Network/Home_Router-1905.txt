@@ -106,12 +106,10 @@ no shutdown
 ip nat inside source list 1 interface GigabitEthernet0/0 overload
 ip route 0.0.0.0 0.0.0.0 172.66.0.3
 
-access-list 1 permit 10.48.11.0 0.0.0.255
-access-list 1 permit 10.48.110.0 0.0.0.255
-access-list 1 permit 172.16.111.0 0.0.0.255
-access-list 1 permit 10.16.201.0 0.0.0.255
-access-list 1 permit 10.16.202.0 0.0.0.255
-access-list 1 permit 10.16.203.0 0.0.0.255
+access-list 1 permit 172.66.0.0 0.0.0.255
+access-list 1 permit 10.48.0.0 0.0.255.255
+access-list 1 permit 172.16.0.0 0.0.255.255
+access-list 1 permit 10.16.0.0 0.0.255.255
 
 snmp-server community SNMPpublic RO
 

@@ -51,6 +51,7 @@ description ISP
 ip address 172.31.0.2 255.255.255.252
 no shut
 ip nat outside
+exit
 
 int g0/1.10
 description MANAGEMENT
@@ -58,6 +59,7 @@ encapsulation dot1Q 10
 ip address 10.48.10.1 255.255.255.0
 ip nat inside
 no shutdown
+exit
 
 int g0/1.100
 description NETWORK-CORE
@@ -65,6 +67,7 @@ encapsulation dot1Q 100
 ip address 10.48.100.1 255.255.255.0
 ip nat inside
 no shutdown
+exit
 
 int g0/1.101
 description NETWORK-IOT
@@ -72,6 +75,7 @@ encapsulation dot1Q 101
 ip address 172.16.101.1 255.255.255.0
 ip nat inside
 no shutdown
+exit
 
 int g0/1.204
 description NETWORK-YONI
@@ -79,6 +83,7 @@ encapsulation dot1Q 204
 ip address 10.16.204.1 255.255.255.0
 ip nat inside
 no shutdown
+exit
 
 int g0/1.205
 description NETWORK-TITANES
@@ -86,27 +91,41 @@ encapsulation dot1Q 205
 ip address 10.16.205.1 255.255.255.0
 ip nat inside
 no shutdown
+exit
 
-int f0/0/0
+int VLAN66
 description TO-HOME
 ip address 172.66.0.1 255.255.255.248
 ip nat inside
 no shutdown
+exit
+VLAN 66
+name TO-HOME
+no shutdown
+exit
+int g0/0/0
+switchport access vlan 66
+no shutdown
+exit
 
 ip nat inside source list 1 interface GigabitEthernet0/0 overload
-ip route 0.0.0.0 0.0.0.0 172.31.0.1
 
+access-list 1 permit 10.16.0.0 0.0.255.255
 access-list 1 permit 10.48.0.0 0.0.255.255
 access-list 1 permit 172.16.0.0 0.0.255.255
-access-list 1 permit 10.16.0.0 0.0.255.255
 access-list 1 permit 172.66.0.0 0.0.0.255
 
-router ospf 66
-network 10.48.0.0 0.0.255.255 area 0
-network 172.16.0.0 0.0.255.255 area 0
-network 10.16.0.0 0.0.255.255 area 0
-network 172.66.0.0 0.0.0.255 area 0
+ip route 0.0.0.0 0.0.0.0 172.31.0.1
+
+router rip
+version 2
+no auto-summary
+network 10.16.0.0
+network 10.48.0.0
+network 172.16.0.0
+network 172.66.0.0
 default-information originate
+passive-interface g0/0
 
 snmp-server community SNMPpublic RO
 
